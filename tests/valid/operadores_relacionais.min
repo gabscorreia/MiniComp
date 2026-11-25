@@ -7,7 +7,19 @@
         write(a);
     }
 
+    if (a > b) then {
+        write(a);
+    }
+
+    if (a >= b) then {
+        write(a);
+    }
+
     if (a == b) then {
+        write(a);
+    }
+
+    if (a != b) then {
         write(a);
     }
 }
