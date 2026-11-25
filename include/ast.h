@@ -3,6 +3,7 @@
 
 #include "lexer.h"
 
+#include <iosfwd>
 #include <memory>
 #include <string>
 #include <vector>
@@ -89,5 +90,8 @@ struct WhileStmt : Stmt {
     WhileStmt(std::unique_ptr<Expr> condition,
               std::unique_ptr<BlockStmt> body);
 };
+
+// Exibe a árvore sintática abstrata.
+void printAST(const BlockStmt& ast, std::ostream& output);
 
 #endif
