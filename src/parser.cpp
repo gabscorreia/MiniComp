@@ -131,11 +131,20 @@ std::unique_ptr<BlockStmt> Parser::parseBlock() {
         }
     }
 
-    consume(TokenType::RightBrace, "'}'");
+    if (check(TokenType::EndOfFile)) {
+        errors_.push_back(
+            "Erro sintático na linha " +
+            std::to_string(peek().line) +
+            ", coluna " +
+            std::to_string(peek().column) +
+            ": esperado '}', encontrado EOF"
+        );
+    } else {
+        consume(TokenType::RightBrace, "'}'");
+    }
 
     return block;
 }
-
 std::unique_ptr<Stmt> Parser::parseStatement() {
     switch (peek().type) {
         case TokenType::Identifier:
