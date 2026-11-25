@@ -1,0 +1,9 @@
+{
+    if (a + b * 2 > c - 1) then {
+        write(a);
+    }
+
+    while (x * 2 + 1 <= y / 3) do {
+        x = x + 1;
+    }
+}
