@@ -6,9 +6,9 @@
 
 ## Produções
 
-<program> -> <block>
+<program> -> <block> EndOfFile
 
-<block> -> LEFT_BRACE <stmt_list> RIGHT_BRACE
+<block> -> LeftBrace <stmt_list> RightBrace
 
 <stmt_list> -> <statement> <stmt_list>
              | ε
@@ -19,43 +19,43 @@
              | <if_stmt>
              | <while_stmt>
 
-<assignment> -> IDENTIFIER ASSIGN <expr> SEMICOLON
+<assignment> -> Identifier Assign <expr> Semicolon
 
-<read_stmt> -> READ LEFT_PAREN IDENTIFIER RIGHT_PAREN SEMICOLON
+<read_stmt> -> KwRead LeftParen Identifier RightParen Semicolon
 
-<write_stmt> -> WRITE LEFT_PAREN <expr> RIGHT_PAREN SEMICOLON
+<write_stmt> -> KwWrite LeftParen <expr> RightParen Semicolon
 
-<if_stmt> -> IF LEFT_PAREN <condition> RIGHT_PAREN
-             THEN <block> <else_opt>
+<if_stmt> -> KwIf LeftParen <condition> RightParen
+             KwThen <block> <else_opt>
 
-<else_opt> -> ELSE <block>
+<else_opt> -> KwElse <block>
             | ε
 
-<while_stmt> -> WHILE LEFT_PAREN <condition> RIGHT_PAREN
-                DO <block>
+<while_stmt> -> KwWhile LeftParen <condition> RightParen
+                KwDo <block>
 
 <condition> -> <expr> <relop> <expr>
 
-<relop> -> LESS
-          | LESS_EQUAL
-          | GREATER
-          | GREATER_EQUAL
-          | EQUAL
-          | NOT_EQUAL
+<relop> -> Less
+          | LessEqual
+          | Greater
+          | GreaterEqual
+          | Equal
+          | NotEqual
 
 <expr> -> <term> <expr_tail>
 
-<expr_tail> -> PLUS <term> <expr_tail>
-             | MINUS <term> <expr_tail>
+<expr_tail> -> Plus <term> <expr_tail>
+             | Minus <term> <expr_tail>
              | ε
 
 <term> -> <factor> <term_tail>
 
-<term_tail> -> MULTIPLY <factor> <term_tail>
-             | DIVIDE <factor> <term_tail>
-             | MODULO <factor> <term_tail>
+<term_tail> -> Star <factor> <term_tail>
+             | Slash <factor> <term_tail>
+             | Percent <factor> <term_tail>
              | ε
 
-<factor> -> NUMBER
-          | IDENTIFIER
-          | LEFT_PAREN <expr> RIGHT_PAREN
+<factor> -> Number
+          | Identifier
+          | LeftParen <expr> RightParen
