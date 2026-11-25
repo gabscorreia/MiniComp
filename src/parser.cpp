@@ -107,7 +107,11 @@ std::unique_ptr<BlockStmt> Parser::parseBlock() {
     while (!check(TokenType::RightBrace) &&
            !check(TokenType::EndOfFile)) {
         try {
-            block->statements.push_back(parseStatement());
+            auto statement = parseStatement();
+
+            if (statement) {
+                block->statements.push_back(std::move(statement));
+            }
         } catch (const std::runtime_error& error) {
             errors_.push_back(error.what());
             synchronize();
@@ -186,7 +190,25 @@ std::unique_ptr<Stmt> Parser::parseIf() {
     consume(TokenType::KwIf, "'if'");
     consume(TokenType::LeftParen, "'('");
 
-    auto condition = parseCondition();
+    std::unique_ptr<Expr> condition;
+
+    try {
+        condition = parseCondition();
+    } catch (const std::runtime_error& error) {
+        errors_.push_back(error.what());
+
+        consume(TokenType::RightParen, "')'");
+        consume(TokenType::KwThen, "'then'");
+
+        parseBlock();
+
+        if (check(TokenType::KwElse)) {
+            advance();
+            parseBlock();
+        }
+
+        return nullptr;
+    }
 
     consume(TokenType::RightParen, "')'");
     consume(TokenType::KwThen, "'then'");
@@ -210,7 +232,20 @@ std::unique_ptr<Stmt> Parser::parseWhile() {
     consume(TokenType::KwWhile, "'while'");
     consume(TokenType::LeftParen, "'('");
 
-    auto condition = parseCondition();
+    std::unique_ptr<Expr> condition;
+
+    try {
+        condition = parseCondition();
+    } catch (const std::runtime_error& error) {
+        errors_.push_back(error.what());
+
+        consume(TokenType::RightParen, "')'");
+        consume(TokenType::KwDo, "'do'");
+
+        parseBlock();
+
+        return nullptr;
+    }
 
     consume(TokenType::RightParen, "')'");
     consume(TokenType::KwDo, "'do'");
