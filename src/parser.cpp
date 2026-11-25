@@ -65,24 +65,38 @@ bool Parser::isStatementStart(TokenType type) const {
 
 // Procura um ponto seguro para retomar a análise.
 void Parser::synchronize() {
-    if (check(TokenType::EndOfFile) ||
-        check(TokenType::RightBrace)) {
-        return;
-    }
+    int parentheses = 0;
+    int braces = 0;
 
-    if (check(TokenType::Semicolon)) {
-        advance();
-        return;
-    }
+    while (!check(TokenType::EndOfFile)) {
 
-    while (!check(TokenType::EndOfFile) &&
-           !check(TokenType::RightBrace)) {
-
-        if (isStatementStart(peek().type)) {
+        if (parentheses == 0 &&
+            braces == 0 &&
+            isStatementStart(peek().type)) {
             return;
         }
 
-        if (check(TokenType::Semicolon)) {
+        if (check(TokenType::LeftParen)) {
+            ++parentheses;
+        }
+        else if (check(TokenType::RightParen)) {
+            if (parentheses == 0) {
+                return;
+            }
+            --parentheses;
+        }
+        else if (check(TokenType::LeftBrace)) {
+            ++braces;
+        }
+        else if (check(TokenType::RightBrace)) {
+            if (braces == 0) {
+                return;
+            }
+            --braces;
+        }
+        else if (check(TokenType::Semicolon) &&
+                 parentheses == 0 &&
+                 braces == 0) {
             advance();
             return;
         }
@@ -90,7 +104,6 @@ void Parser::synchronize() {
         advance();
     }
 }
-
 std::unique_ptr<BlockStmt> Parser::parse() {
     auto program = parseBlock();
 
