@@ -1,0 +1,11 @@
+{
+    /* Comentário antes da atribuição */
+    x = 10;
+
+    /*
+       Comentário de múltiplas linhas.
+       O conteúdo não deve gerar tokens.
+    */
+
+    write(x); // Comentário no final da linha
+}
