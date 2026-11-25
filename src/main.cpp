@@ -47,10 +47,10 @@ int main(int argc, char* argv[]) {
         Parser parser(tokens);
         auto ast = parser.parse();
 
-        (void)ast;
-
         std::cout << "\nAnálise sintática concluída.\n";
         std::cout << "AST gerada com sucesso.\n";
+
+        printAST(*ast, std::cout);
 
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';
