@@ -1,0 +1,16 @@
+{ 
+    // Exemplo de tokens da MiniLang
+    read(x);
+    y = 10 + 2 * 3;
+    write(y);
+
+    if (y >= x) then {
+        write(y);
+    } else {
+        write(x);
+    }
+
+    while (x != 0) do {
+        x = x - 1;
+    }
+}
