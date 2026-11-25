@@ -1,0 +1,6 @@
+{
+    _contador = 10;
+    valor2 = 20;
+    _resultado_final = _contador + valor2;
+    write(_resultado_final);
+}
