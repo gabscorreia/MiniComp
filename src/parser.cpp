@@ -20,6 +20,7 @@ const Token& Parser::advance() {
 
     return currentToken;
 }
+
 bool Parser::check(TokenType type) const {
     return peek().type == type;
 }
@@ -44,6 +45,52 @@ const Token& Parser::consume(TokenType type,
         ": " + message);
 }
 
+const std::vector<std::string>& Parser::errors() const {
+    return errors_;
+}
+
+bool Parser::isStatementStart(TokenType type) const {
+    switch (type) {
+        case TokenType::Identifier:
+        case TokenType::KwRead:
+        case TokenType::KwWrite:
+        case TokenType::KwIf:
+        case TokenType::KwWhile:
+            return true;
+
+        default:
+            return false;
+    }
+}
+
+// Procura um ponto seguro para retomar a análise.
+void Parser::synchronize() {
+    if (check(TokenType::EndOfFile) ||
+        check(TokenType::RightBrace)) {
+        return;
+    }
+
+    if (check(TokenType::Semicolon)) {
+        advance();
+        return;
+    }
+
+    while (!check(TokenType::EndOfFile) &&
+           !check(TokenType::RightBrace)) {
+
+        if (isStatementStart(peek().type)) {
+            return;
+        }
+
+        if (check(TokenType::Semicolon)) {
+            advance();
+            return;
+        }
+
+        advance();
+    }
+}
+
 std::unique_ptr<BlockStmt> Parser::parse() {
     auto program = parseBlock();
 
@@ -59,7 +106,12 @@ std::unique_ptr<BlockStmt> Parser::parseBlock() {
 
     while (!check(TokenType::RightBrace) &&
            !check(TokenType::EndOfFile)) {
-        block->statements.push_back(parseStatement());
+        try {
+            block->statements.push_back(parseStatement());
+        } catch (const std::runtime_error& error) {
+            errors_.push_back(error.what());
+            synchronize();
+        }
     }
 
     consume(TokenType::RightBrace, "'}'");

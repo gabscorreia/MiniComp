@@ -12,15 +12,20 @@ public:
 
     std::unique_ptr<BlockStmt> parse();
 
+    const std::vector<std::string>& errors() const;
+
 private:
     const std::vector<Token>& tokens_;
     std::size_t current_;
+    std::vector<std::string> errors_;
 
     const Token& peek() const;
     const Token& advance();
     bool check(TokenType type) const;
     const Token& consume(TokenType type, const std::string& expected);
     [[noreturn]] void syntaxError(const std::string& message) const;
+
+    void synchronize();
 
     std::unique_ptr<BlockStmt> parseBlock();
     std::unique_ptr<Stmt> parseStatement();
@@ -36,6 +41,7 @@ private:
     std::unique_ptr<Expr> parseFactor();
 
     bool isRelationalOperator(TokenType type) const;
+    bool isStatementStart(TokenType type) const;
 };
 
 #endif

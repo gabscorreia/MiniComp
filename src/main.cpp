@@ -47,10 +47,24 @@ int main(int argc, char* argv[]) {
         Parser parser(tokens);
         auto ast = parser.parse();
 
-        std::cout << "\nAnálise sintática concluída.\n";
-        std::cout << "AST gerada com sucesso.\n";
+        if (!parser.errors().empty()) {
+            std::cerr << "\nErros sintáticos encontrados:\n";
+
+            for (const std::string& error : parser.errors()) {
+                std::cerr << error << '\n';
+            }
+
+            std::cout << "\nAST parcial gerada após recuperação.\n";
+        } else {
+            std::cout << "\nAnálise sintática concluída.\n";
+            std::cout << "AST gerada com sucesso.\n";
+        }
 
         printAST(*ast, std::cout);
+
+        if (!parser.errors().empty()) {
+            return 1;
+        }
 
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';
