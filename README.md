@@ -12,7 +12,7 @@ Este repositório contém o desenvolvimento do **MiniComp**, um compilador para 
 
 O projeto abrange as etapas de **análise léxica**, **análise sintática preditiva LL(1)**, **construção de Árvore Sintática Abstrata (AST)**, **gerenciamento de tabela de símbolos** e **interpretação semântica**, incluindo o tratamento de erros e a execução de comandos e expressões da linguagem.
 
-## 🏗️ Arquitetura do Projeto
+## Arquitetura do Projeto
 
 O compilador foi estruturado em componentes integrados, responsáveis pelas diferentes etapas de processamento do código-fonte. O fluxo inicia com a identificação dos tokens, passa pela validação sintática e construção da AST, e finaliza com a interpretação semântica do programa:
 
@@ -46,7 +46,7 @@ O compilador foi estruturado em componentes integrados, responsáveis pelas dife
                     [ Saída / Resultados ]
 ```
 
-### 🔹 Componentes do Compilador
+### Componentes do Compilador
 
 * **Analisador Léxico (Lexer):** responsável por reconhecer identificadores, números inteiros, palavras reservadas, operadores e delimitadores, descartando espaços em branco e comentários e identificando erros léxicos com indicação de posição.
 * **Analisador Sintático (Parser LL(1)):** responsável por verificar a estrutura gramatical do código-fonte por meio de análise sintática preditiva, utilizando os conjuntos FIRST e FOLLOW e a tabela de parsing LL(1).
@@ -54,7 +54,7 @@ O compilador foi estruturado em componentes integrados, responsáveis pelas dife
 * **Tabela de Símbolos:** gerencia as variáveis globais da linguagem, armazenando identificadores e seus respectivos valores durante a execução.
 * **Interpretador:** percorre a AST e executa comandos de atribuição, leitura, escrita, estruturas condicionais `if-then-else`, laços `while-do` e expressões aritméticas e relacionais.
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
 * Reconhecimento léxico de tokens.
 * Identificação e tratamento de erros léxicos.
@@ -68,7 +68,7 @@ O compilador foi estruturado em componentes integrados, responsáveis pelas dife
 * Rastreamento da execução do programa.
 * Validação por meio de casos de teste válidos e inválidos.
 
-## 🛠️ Tecnologias e Ferramentas
+## Tecnologias e Ferramentas
 
 | Tecnologia | Aplicação |
 | :--- | :--- |
@@ -118,7 +118,7 @@ MiniComp/
 └── .gitignore
 ```
 
-## 🧪 Testes e Validação
+## Testes e Validação
 
 O compilador será validado por meio de programas de teste que abrangem diferentes construções da MiniLang, incluindo:
 
@@ -130,7 +130,7 @@ O compilador será validado por meio de programas de teste que abrangem diferent
 * Identificação de erros léxicos e sintáticos.
 * Tratamento de divisão por zero.
 
-## 📚 Documentação Técnica
+## Documentação Técnica
 
 A documentação contempla a especificação formal da MiniLang, a definição dos tokens, a gramática livre de contexto, as transformações necessárias para obtenção de uma gramática LL(1), os conjuntos FIRST e FOLLOW, a tabela de parsing, os diagramas JFLAP, as decisões de implementação e os resultados dos testes.
 
