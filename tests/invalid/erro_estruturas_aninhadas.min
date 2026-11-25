@@ -1,0 +1,12 @@
+{
+    if (x > 0) then {
+        while (y < 10) do {
+            z = ;
+            write(y);
+        }
+        write(x);
+    }
+
+    w = 50;
+    write(w);
+}

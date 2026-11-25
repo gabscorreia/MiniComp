@@ -1,0 +1,9 @@
+{
+    while (x < 10) do {
+        y = ;
+        write(x);
+    }
+
+    z = 30;
+    write(z);
+}

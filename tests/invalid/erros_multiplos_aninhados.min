@@ -1,0 +1,13 @@
+{
+    if (x > 0) then {
+        a = ;
+        while (y < 10) do {
+            b = ;
+            write(y);
+        }
+        c = ;
+    }
+
+    d = 40;
+    write(d);
+}
