@@ -1,0 +1,8 @@
+{
+    x = 10;
+    if (x > ) then {
+        write(x);
+    }
+    y = 20;
+    write(y);
+}
