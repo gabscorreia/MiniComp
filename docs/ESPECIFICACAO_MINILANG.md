@@ -73,7 +73,7 @@ expression   = term , { ("+" | "-") , term } ;
 term          = factor , { ("*" | "/" | "%") , factor } ;
 factor        = integer | identifier | "(" , expression , ")" ;
 
-identifier    = letter , { letter | digit | "_" } ;
+identifier    = (letter | "_") , { letter | digit | "_" } ;
 integer       = digit , { digit } ;
 ```
 
