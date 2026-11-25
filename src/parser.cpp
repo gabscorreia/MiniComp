@@ -5,8 +5,15 @@
 #include <utility>
 
 Parser::Parser(const std::vector<Token>& tokens)
-    : tokens_(tokens), current_(0) {}
+    : tokens_(tokens), current_(0) {
 
+    if (tokens_.empty() ||
+        tokens_.back().type != TokenType::EndOfFile) {
+        throw std::invalid_argument(
+            "Sequência de tokens inválida: marcador EOF ausente."
+        );
+    }
+}
 const Token& Parser::peek() const {
     return tokens_[current_];
 }
@@ -80,11 +87,12 @@ void Parser::synchronize() {
             ++parentheses;
         }
         else if (check(TokenType::RightParen)) {
-            if (parentheses == 0) {
-                return;
-            }
-            --parentheses;
+             if (parentheses == 0) {
+                 advance();
+                 return;
         }
+             --parentheses;
+       }
         else if (check(TokenType::LeftBrace)) {
             ++braces;
         }
