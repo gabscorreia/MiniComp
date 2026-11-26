@@ -1,5 +1,6 @@
 #include "lexer.h"
 #include "parser.h"
+#include "interpreter.h"
 
 #include <fstream>
 #include <iostream>
@@ -8,15 +9,22 @@
 #include <string>
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        std::cerr << "Uso: mincomp <arquivo.min>\n";
+    const bool checkOnly = (argc == 3 &&
+                            std::string(argv[1]) == "--check");
+
+    if ((!checkOnly && argc != 2) ||
+        (checkOnly && argc != 3)) {
+        std::cerr << "Uso: mincomp [--check] <arquivo.min>\n";
         return 1;
     }
 
-    std::ifstream input(argv[1]);
+    const char* filename = checkOnly ? argv[2] : argv[1];
+
+    std::ifstream input(filename);
+
     if (!input) {
         std::cerr << "Não foi possível abrir o arquivo: "
-                  << argv[1] << '\n';
+                  << filename << '\n';
         return 1;
     }
 
@@ -55,16 +63,27 @@ int main(int argc, char* argv[]) {
             }
 
             std::cout << "\nAST parcial gerada após recuperação.\n";
-        } else {
-            std::cout << "\nAnálise sintática concluída.\n";
-            std::cout << "AST gerada com sucesso.\n";
+            printAST(*ast, std::cout);
+            return 1;
         }
+
+        std::cout << "\nAnálise sintática concluída.\n";
+        std::cout << "AST gerada com sucesso.\n";
 
         printAST(*ast, std::cout);
 
-        if (!parser.errors().empty()) {
-            return 1;
+        // Modo de verificação: não executa o programa.
+        if (checkOnly) {
+            return 0;
         }
+
+        // Etapa 3: interpretação e execução.
+        std::cout << "\nIniciando execução:\n";
+
+        Interpreter interpreter(std::cin, std::cout);
+        interpreter.interpret(*ast);
+
+        std::cout << "\nExecução concluída com sucesso.\n";
 
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';
