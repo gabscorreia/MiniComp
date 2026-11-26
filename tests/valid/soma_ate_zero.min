@@ -1,0 +1,12 @@
+{
+    soma = 0;
+
+    read(numero);
+
+    while (numero != 0) do {
+        soma = soma + numero;
+        read(numero);
+    }
+
+    write(soma);
+}

@@ -1,0 +1,17 @@
+{
+    x = 10 + 5 * 2;
+    write(x);
+
+    if (x > 15) then {
+        write(1);
+    } else {
+        write(0);
+    }
+
+    i = 0;
+
+    while (i < 3) do {
+        write(i);
+        i = i + 1;
+    }
+}
