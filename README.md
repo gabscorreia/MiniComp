@@ -6,7 +6,7 @@
 ![JFLAP](https://img.shields.io/badge/JFLAP-2B5B84?style=for-the-badge)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 
-## 📌 Visão Geral do Projeto
+## Visão Geral do Projeto
 
 Este repositório contém o desenvolvimento do **MiniComp**, um compilador para a linguagem de programação hipotética **MiniLang**, implementado em **C++**. O objetivo principal é desenvolver um compilador funcional capaz de realizar o processamento e a interpretação de programas escritos em MiniLang, aplicando conceitos fundamentais de linguagens formais, teoria da computação e construção de compiladores.
 
